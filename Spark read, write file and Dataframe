@@ -1,0 +1,51 @@
+package lectures
+
+import org.apache.spark.sql.{SaveMode,SparkSession}
+import org.acpahe.spar.sql.types._
+
+object DFClass extends App{
+
+//Creating a SparkSession
+
+val spark= SparSeeion
+.build()
+.appName("Data Source and Formats")
+.config("Spark.master","local)
+.getOrCreate()
+
+
+//Reading from JSON file
+
+val carsSchema = StructureType(Array(
+ StructField("Name", StringType),
+ StructField("Miles_per_Gallon", DoubleType),
+ StructField("Cylinders", LongType),
+ StructField("Displacement", DoubleType),
+ StructField("Horsepower", LongType),
+ StructField("Weight_in_lbs", LongType),
+ StructField("Acceleration", DoubleType),
+ StructField("Year", DateType),
+ StructField("Origin", StringType)
+))
+
+
+//Writing a DataFrame
+carsDF.write.mdoe(SaveMode.Overwrite).save("path","path/to/souceofdata/file.json")
+
+
+//Reading a DataFrame
+
+val carsDF= spark.read
+.fromat("json)
+.schema("carsSchema)
+.option("mode","permissive")
+.option("path","path/to/souceofdata/file.json")
+.load
+
+
+
+
+
+
+
+}
